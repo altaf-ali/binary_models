@@ -119,6 +119,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#model-quality"><i class="fa fa-check"></i><b>3.4</b> Model Quality</a><ul>
 <li class="chapter" data-level="3.4.1" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#joint-hypothesis-testing"><i class="fa fa-check"></i><b>3.4.1</b> Joint hypothesis testing</a></li>
 </ul></li>
+<li class="chapter" data-level="3.5" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#interpretation-with-zelig"><i class="fa fa-check"></i><b>3.5</b> Interpretation with Zelig</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
 </ul>
@@ -433,8 +434,101 @@ outcome</code></pre></div>
 ## model1 10 4464.535
 ## model2 12 4079.903</code></pre>
 <p>According to both AIC and BIC, model 2 has a better fit.</p>
-
 </div>
+</div>
+<div id="interpretation-with-zelig" class="section level2">
+<h2><span class="header-section-number">3.5</span> Interpretation with Zelig</h2>
+<p>Since we cannot directly estimate the marginal effects of the independent variables from a logistic regression model, we use <code>Zelig</code> to help us with the interpretation. We pick meaningful scenarios and predict the probability that a person will vote based on the scenarios. What are meaningful scenarios? A meaningful scenario is a set of covariate values that corresponds to some case that is interesting in reality. For example, you may want to compare a women with 18 years of education to a man with 18 years of education while keeping all other variables at their means, medians or modes.</p>
+<p>First, we re-estimate our previous model using <code>Zelig</code>.</p>
+<p>NOTE: Since we’re estimating a logistic regression model, we use <code>model = &quot;logit&quot;</code> instead of <code>model = &quot;ls&quot;</code> like we’ve done in the past.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z.out &lt;-<span class="st"> </span><span class="kw">zelig</span>(Turnout ~<span class="st"> </span>Income +<span class="st"> </span>polinfoindex +<span class="st"> </span>Influence +<span class="st"> </span>Gender +<span class="st"> </span>Age +<span class="st"> </span>
+<span class="st">                 </span>edu15 +<span class="st"> </span>edu17 +<span class="st"> </span>edu18 +<span class="st"> </span>edu19plus +<span class="st"> </span>in_school +<span class="st"> </span>in_uni, 
+               <span class="dt">model =</span> <span class="st">&quot;logit&quot;</span>, 
+               <span class="dt">data =</span> bes)</code></pre></div>
+<pre><code>## How to cite this model in Zelig:
+##   R Core Team. 2007.
+##   logit: Logistic Regression for Dichotomous Dependent Variables
+##   in Christine Choirat, Christopher Gandrud, James Honaker, Kosuke Imai, Gary King, and Olivia Lau,
+##   &quot;Zelig: Everyone&#39;s Statistical Software,&quot; http://zeligproject.org/</code></pre>
+<p>In order to compare the average women with 18 years of education to the average man with 18 years of education, <code>Gender</code> to either <code>Male</code> or <code>Female</code>, <code>edu18</code> to <code>1</code> and all other binary variables to their modes, ordinally scaled variables to their medians and interval scaled variables to their means.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.male &lt;-<span class="st"> </span><span class="kw">setx</span>(z.out, 
+               <span class="dt">Gender =</span> <span class="st">&quot;Male&quot;</span>, <span class="dt">edu18 =</span> <span class="dv">1</span>, 
+               <span class="dt">Age =</span> <span class="kw">mean</span>(bes$Age),
+               <span class="dt">Income =</span> <span class="kw">mean</span>(bes$Income), 
+               <span class="dt">polinfoindex =</span> <span class="kw">mean</span>(bes$polinfoindex), 
+               <span class="dt">Influence =</span> <span class="kw">mean</span>(bes$Influence),  
+               <span class="dt">edu15 =</span> <span class="dv">0</span>, <span class="dt">edu17 =</span> <span class="dv">0</span>, <span class="dt">edu19plus =</span> <span class="dv">0</span>, <span class="dt">in_school =</span> <span class="dv">0</span>, <span class="dt">in_uni =</span> <span class="dv">0</span>)
+
+x.female &lt;-<span class="st"> </span><span class="kw">setx</span>(z.out, <span class="dt">Gender =</span> <span class="st">&quot;Female&quot;</span>, <span class="dt">edu18 =</span> <span class="dv">1</span>, 
+                 <span class="dt">Age =</span> <span class="kw">mean</span>(bes$Age),
+                 <span class="dt">Income =</span> <span class="kw">mean</span>(bes$Income), 
+                 <span class="dt">polinfoindex =</span> <span class="kw">mean</span>(bes$polinfoindex), 
+                 <span class="dt">Influence =</span> <span class="kw">mean</span>(bes$Influence),  
+                 <span class="dt">edu15 =</span> <span class="dv">0</span>, <span class="dt">edu17 =</span> <span class="dv">0</span>, <span class="dt">edu19plus =</span> <span class="dv">0</span>, <span class="dt">in_school =</span> <span class="dv">0</span>, <span class="dt">in_uni =</span> <span class="dv">0</span>)
+
+s.out &lt;-<span class="st"> </span><span class="kw">sim</span>(z.out, x.male, <span class="dt">x1 =</span> x.female)
+<span class="kw">summary</span>(s.out)</code></pre></div>
+<pre><code>## 
+##  sim x :
+##  -----
+## ev
+##           mean         sd       50%      2.5%     97.5%
+## [1,] 0.7845004 0.02570278 0.7856962 0.7319866 0.8313563
+## pv
+##          0     1
+## [1,] 0.228 0.772
+## 
+##  sim x1 :
+##  -----
+## ev
+##           mean         sd       50%      2.5%     97.5%
+## [1,] 0.8379307 0.01968942 0.8392759 0.7976236 0.8730706
+## pv
+##          0     1
+## [1,] 0.169 0.831
+## fd
+##            mean         sd        50%       2.5%      97.5%
+## [1,] 0.05343038 0.01391021 0.05238642 0.02780798 0.08104585</code></pre>
+<p>If you’re not familiar with how to interpret Zelig simulation summary, then click at the link below for an annotated example:</p>
+<p><a href="https://uclspp.github.io/PUBLG100/faq/zelig_sim.html" type="button" class="btn btn-info">Interpreting Zelig Simulation</a></p>
+<p>For the average woman (in our sample) with <code>18</code> years of education, we predict a probability of <code>84%</code> that she will vote. Our uncertainty is plus and minus <code>4%</code> on the <code>95%</code> confidence level. Note that we’ve rounded up the numbers just to simplify the interpretation.</p>
+<p>For her male counterpart, we predict the probability of turnout to be <code>78%</code> (plus and minus <code>5%</code> based on the <code>95%</code> confidence interval). Is the difference between them statistically significant or put differently is our hypothetical woman more likely to vote than our hypothetical man?</p>
+<p>To check that we look at the first difference. The difference is <code>5%</code> percentage points on average and between <code>3</code> percentage points and <code>8</code> percentage points based on the <code>95%</code> confidence interval.</p>
+<p>Our next step will be to compare two groups like men and women while varying another continuous variable from lowest to highest. We use income here. So, we set a sequence for income, vary gender and keep every other variable constant at its appropriate measure of central tendency.</p>
+<p>Let’s see what the range of <code>Income</code> variable is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(bes$Income)</code></pre></div>
+<pre><code>## [1]  1 13</code></pre>
+<p><code>Income</code> ranges from <code>1</code> to <code>13</code> in our sample so we can just say <code>Income = 1:13</code> or use the <code>seq()</code> function as shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.male &lt;-<span class="st"> </span><span class="kw">setx</span>(z.out, 
+               <span class="dt">Gender =</span> <span class="st">&quot;Male&quot;</span>, <span class="dt">edu18 =</span> <span class="dv">1</span>, 
+               <span class="dt">Age =</span> <span class="kw">mean</span>(bes$Age),
+               <span class="dt">Income =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">13</span>), 
+               <span class="dt">polinfoindex =</span> <span class="kw">mean</span>(bes$polinfoindex), 
+               <span class="dt">Influence =</span> <span class="kw">mean</span>(bes$Influence),  
+               <span class="dt">edu15 =</span> <span class="dv">0</span>, <span class="dt">edu17 =</span> <span class="dv">0</span>, <span class="dt">edu19plus =</span> <span class="dv">0</span>, <span class="dt">in_school =</span> <span class="dv">0</span>, <span class="dt">in_uni =</span> <span class="dv">0</span>)
+
+x.female &lt;-<span class="st"> </span><span class="kw">setx</span>(z.out, <span class="dt">Gender =</span> <span class="st">&quot;Female&quot;</span>, <span class="dt">edu18 =</span> <span class="dv">1</span>, 
+                 <span class="dt">Age =</span> <span class="kw">mean</span>(bes$Age),
+                 <span class="dt">Income =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">13</span>), 
+                 <span class="dt">polinfoindex =</span> <span class="kw">mean</span>(bes$polinfoindex), 
+                 <span class="dt">Influence =</span> <span class="kw">mean</span>(bes$Influence),  
+                 <span class="dt">edu15 =</span> <span class="dv">0</span>, <span class="dt">edu17 =</span> <span class="dv">0</span>, <span class="dt">edu19plus =</span> <span class="dv">0</span>, <span class="dt">in_school =</span> <span class="dv">0</span>, <span class="dt">in_uni =</span> <span class="dv">0</span>)
+
+s.out &lt;-<span class="st"> </span><span class="kw">sim</span>(z.out, x.male, <span class="dt">x1 =</span> x.female)</code></pre></div>
+<p>Now we can plot the confidence interval for the two groups:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci.plot</span>(s.out, 
+        <span class="dt">ci =</span> <span class="dv">95</span>,
+        <span class="dt">xlab =</span> <span class="st">&quot;Income&quot;</span>, 
+        <span class="dt">ylab =</span> <span class="st">&quot;Predicted Probability of Voting&quot;</span>,
+        <span class="dt">main =</span> <span class="st">&quot;Effect of Income by Gender&quot;</span>)
+
+<span class="co"># add labels manually</span>
+<span class="co"># NOTE: the x and y values below are just coordinates on the plot, you can change </span>
+<span class="co">#       them based on where you want the labels placed</span>
+<span class="kw">text</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">y =</span> .<span class="dv">85</span>, <span class="dt">labels =</span> <span class="st">&quot;Women&quot;</span>)  
+<span class="kw">text</span>(<span class="dt">x =</span> <span class="dv">6</span>, <span class="dt">y =</span> .<span class="dv">75</span>, <span class="dt">labels =</span> <span class="st">&quot;Men&quot;</span>)    </code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+
 </div>
 </div>
             </section>

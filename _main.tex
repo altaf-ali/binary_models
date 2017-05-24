@@ -170,7 +170,7 @@ We cover the following:
 
 \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
 
-\emph{Last Updated: May 24, 2017 7:36 PM}
+\emph{Last Updated: May 24, 2017 7:45 PM}
 
 \section{Binary Models -- Logit and
 Probit}\label{binary-models-logit-and-probit}
@@ -920,6 +920,178 @@ Now let's see if AIC and BIC agree.
 \end{verbatim}
 
 According to both AIC and BIC, model 2 has a better fit.
+
+\subsection{Interpretation with Zelig}\label{interpretation-with-zelig}
+
+Since we cannot directly estimate the marginal effects of the
+independent variables from a logistic regression model, we use
+\texttt{Zelig} to help us with the interpretation. We pick meaningful
+scenarios and predict the probability that a person will vote based on
+the scenarios. What are meaningful scenarios? A meaningful scenario is a
+set of covariate values that corresponds to some case that is
+interesting in reality. For example, you may want to compare a women
+with 18 years of education to a man with 18 years of education while
+keeping all other variables at their means, medians or modes.
+
+First, we re-estimate our previous model using \texttt{Zelig}.
+
+NOTE: Since we're estimating a logistic regression model, we use
+\texttt{model\ =\ "logit"} instead of \texttt{model\ =\ "ls"} like we've
+done in the past.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z.out <-}\StringTok{ }\KeywordTok{zelig}\NormalTok{(Turnout ~}\StringTok{ }\NormalTok{Income +}\StringTok{ }\NormalTok{polinfoindex +}\StringTok{ }\NormalTok{Influence +}\StringTok{ }\NormalTok{Gender +}\StringTok{ }\NormalTok{Age +}\StringTok{ }
+\StringTok{                 }\NormalTok{edu15 +}\StringTok{ }\NormalTok{edu17 +}\StringTok{ }\NormalTok{edu18 +}\StringTok{ }\NormalTok{edu19plus +}\StringTok{ }\NormalTok{in_school +}\StringTok{ }\NormalTok{in_uni, }
+               \DataTypeTok{model =} \StringTok{"logit"}\NormalTok{, }
+               \DataTypeTok{data =} \NormalTok{bes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## How to cite this model in Zelig:
+##   R Core Team. 2007.
+##   logit: Logistic Regression for Dichotomous Dependent Variables
+##   in Christine Choirat, Christopher Gandrud, James Honaker, Kosuke Imai, Gary King, and Olivia Lau,
+##   "Zelig: Everyone's Statistical Software," http://zeligproject.org/
+\end{verbatim}
+
+In order to compare the average women with 18 years of education to the
+average man with 18 years of education, \texttt{Gender} to either
+\texttt{Male} or \texttt{Female}, \texttt{edu18} to \texttt{1} and all
+other binary variables to their modes, ordinally scaled variables to
+their medians and interval scaled variables to their means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x.male <-}\StringTok{ }\KeywordTok{setx}\NormalTok{(z.out, }
+               \DataTypeTok{Gender =} \StringTok{"Male"}\NormalTok{, }\DataTypeTok{edu18 =} \DecValTok{1}\NormalTok{, }
+               \DataTypeTok{Age =} \KeywordTok{mean}\NormalTok{(bes$Age),}
+               \DataTypeTok{Income =} \KeywordTok{mean}\NormalTok{(bes$Income), }
+               \DataTypeTok{polinfoindex =} \KeywordTok{mean}\NormalTok{(bes$polinfoindex), }
+               \DataTypeTok{Influence =} \KeywordTok{mean}\NormalTok{(bes$Influence),  }
+               \DataTypeTok{edu15 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu17 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu19plus =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_school =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_uni =} \DecValTok{0}\NormalTok{)}
+
+\NormalTok{x.female <-}\StringTok{ }\KeywordTok{setx}\NormalTok{(z.out, }\DataTypeTok{Gender =} \StringTok{"Female"}\NormalTok{, }\DataTypeTok{edu18 =} \DecValTok{1}\NormalTok{, }
+                 \DataTypeTok{Age =} \KeywordTok{mean}\NormalTok{(bes$Age),}
+                 \DataTypeTok{Income =} \KeywordTok{mean}\NormalTok{(bes$Income), }
+                 \DataTypeTok{polinfoindex =} \KeywordTok{mean}\NormalTok{(bes$polinfoindex), }
+                 \DataTypeTok{Influence =} \KeywordTok{mean}\NormalTok{(bes$Influence),  }
+                 \DataTypeTok{edu15 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu17 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu19plus =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_school =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_uni =} \DecValTok{0}\NormalTok{)}
+
+\NormalTok{s.out <-}\StringTok{ }\KeywordTok{sim}\NormalTok{(z.out, x.male, }\DataTypeTok{x1 =} \NormalTok{x.female)}
+\KeywordTok{summary}\NormalTok{(s.out)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  sim x :
+##  -----
+## ev
+##           mean         sd       50%      2.5%     97.5%
+## [1,] 0.7845004 0.02570278 0.7856962 0.7319866 0.8313563
+## pv
+##          0     1
+## [1,] 0.228 0.772
+## 
+##  sim x1 :
+##  -----
+## ev
+##           mean         sd       50%      2.5%     97.5%
+## [1,] 0.8379307 0.01968942 0.8392759 0.7976236 0.8730706
+## pv
+##          0     1
+## [1,] 0.169 0.831
+## fd
+##            mean         sd        50%       2.5%      97.5%
+## [1,] 0.05343038 0.01391021 0.05238642 0.02780798 0.08104585
+\end{verbatim}
+
+If you're not familiar with how to interpret Zelig simulation summary,
+then click at the link below for an annotated example:
+
+Interpreting Zelig Simulation
+
+For the average woman (in our sample) with \texttt{18} years of
+education, we predict a probability of \texttt{84\%} that she will vote.
+Our uncertainty is plus and minus \texttt{4\%} on the \texttt{95\%}
+confidence level. Note that we've rounded up the numbers just to
+simplify the interpretation.
+
+For her male counterpart, we predict the probability of turnout to be
+\texttt{78\%} (plus and minus \texttt{5\%} based on the \texttt{95\%}
+confidence interval). Is the difference between them statistically
+significant or put differently is our hypothetical woman more likely to
+vote than our hypothetical man?
+
+To check that we look at the first difference. The difference is
+\texttt{5\%} percentage points on average and between \texttt{3}
+percentage points and \texttt{8} percentage points based on the
+\texttt{95\%} confidence interval.
+
+Our next step will be to compare two groups like men and women while
+varying another continuous variable from lowest to highest. We use
+income here. So, we set a sequence for income, vary gender and keep
+every other variable constant at its appropriate measure of central
+tendency.
+
+Let's see what the range of \texttt{Income} variable is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{range}\NormalTok{(bes$Income)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1 13
+\end{verbatim}
+
+\texttt{Income} ranges from \texttt{1} to \texttt{13} in our sample so
+we can just say \texttt{Income\ =\ 1:13} or use the \texttt{seq()}
+function as shown below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x.male <-}\StringTok{ }\KeywordTok{setx}\NormalTok{(z.out, }
+               \DataTypeTok{Gender =} \StringTok{"Male"}\NormalTok{, }\DataTypeTok{edu18 =} \DecValTok{1}\NormalTok{, }
+               \DataTypeTok{Age =} \KeywordTok{mean}\NormalTok{(bes$Age),}
+               \DataTypeTok{Income =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{13}\NormalTok{), }
+               \DataTypeTok{polinfoindex =} \KeywordTok{mean}\NormalTok{(bes$polinfoindex), }
+               \DataTypeTok{Influence =} \KeywordTok{mean}\NormalTok{(bes$Influence),  }
+               \DataTypeTok{edu15 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu17 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu19plus =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_school =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_uni =} \DecValTok{0}\NormalTok{)}
+
+\NormalTok{x.female <-}\StringTok{ }\KeywordTok{setx}\NormalTok{(z.out, }\DataTypeTok{Gender =} \StringTok{"Female"}\NormalTok{, }\DataTypeTok{edu18 =} \DecValTok{1}\NormalTok{, }
+                 \DataTypeTok{Age =} \KeywordTok{mean}\NormalTok{(bes$Age),}
+                 \DataTypeTok{Income =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{13}\NormalTok{), }
+                 \DataTypeTok{polinfoindex =} \KeywordTok{mean}\NormalTok{(bes$polinfoindex), }
+                 \DataTypeTok{Influence =} \KeywordTok{mean}\NormalTok{(bes$Influence),  }
+                 \DataTypeTok{edu15 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu17 =} \DecValTok{0}\NormalTok{, }\DataTypeTok{edu19plus =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_school =} \DecValTok{0}\NormalTok{, }\DataTypeTok{in_uni =} \DecValTok{0}\NormalTok{)}
+
+\NormalTok{s.out <-}\StringTok{ }\KeywordTok{sim}\NormalTok{(z.out, x.male, }\DataTypeTok{x1 =} \NormalTok{x.female)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we can plot the confidence interval for the two groups:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ci.plot}\NormalTok{(s.out, }
+        \DataTypeTok{ci =} \DecValTok{95}\NormalTok{,}
+        \DataTypeTok{xlab =} \StringTok{"Income"}\NormalTok{, }
+        \DataTypeTok{ylab =} \StringTok{"Predicted Probability of Voting"}\NormalTok{,}
+        \DataTypeTok{main =} \StringTok{"Effect of Income by Gender"}\NormalTok{)}
+
+\CommentTok{# add labels manually}
+\CommentTok{# NOTE: the x and y values below are just coordinates on the plot, you can change }
+\CommentTok{#       them based on where you want the labels placed}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x =} \DecValTok{3}\NormalTok{, }\DataTypeTok{y =} \NormalTok{.}\DecValTok{85}\NormalTok{, }\DataTypeTok{labels =} \StringTok{"Women"}\NormalTok{)  }
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x =} \DecValTok{6}\NormalTok{, }\DataTypeTok{y =} \NormalTok{.}\DecValTok{75}\NormalTok{, }\DataTypeTok{labels =} \StringTok{"Men"}\NormalTok{)    }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 \section{Exercises}\label{exercises}
 
