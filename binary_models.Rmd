@@ -1,0 +1,182 @@
+```{r echo = FALSE}
+library(foreign)
+```
+
+# Binary Models – Logit and Probit
+
+Binary dependent variables are frequent in social science research...
+
+-   ... why does somebody vote or not?
+-   ... why does a country go to war or not?
+-   ... why does a legislator vote *yes* or *no*?
+-   ... why do some countries have the death penalty and other not?
+
+## The Linear Probability Model
+
+The linear probability model relies on linear regression to analyze binary variables. 
+
+\begin{eqnarray}
+y_i & = & \beta_0 + \beta_1 \cdot x_{1i} + \beta_2 \cdot x_{2i}+ ... + \beta_k \cdot x_{ki} + \varepsilon_{i}\\
+Pr(y_i=1|x_1, x_2, ...) & = & \beta_0 + \beta_1 \cdot x_{1i} + \beta_2 \cdot x_{2i}+ ... + \beta_k \cdot x_{ki} \\
+\end{eqnarray}
+
+### Advantages
+
+-   We can use a well-known model for a new class of phenomena
+-   Easy to interpret the marginal effects of $x$ variables
+
+### Disadvantages
+
+The linear model needs a continuous dependent variable, if the dependent variable is binary we
+run into problems:
+
+-   Predictions, $\hat y$, are interpreted as probability for $y=1$\
+    [$\rightarrow$ $P(y=1) = \hat y = \beta_0$+$\beta_1 x$, can be above
+    1 if $x$ is large enough]{}\
+    [$\rightarrow$ $P(y=0) = 1- \hat y = 1 - \beta_0$+$\beta_1 x$, can
+    be below 0 if $x$ is small enough]{}
+
+-   The errors will not have a constant variance.\
+    [$\rightarrow$ For a given $x$ the residual can be either
+    (1-$\beta_0$-$\beta_1 x$) or ($\beta_0$+$\beta_1 x$)]{}
+
+-   The linear function might be wrong\
+    [$\rightarrow$ Imagine you buy a car. Having an additional £1000 has
+    a very different effect if you are broke or if you already have
+    another £12,000 for a car.]{}
+
+**Predictions can lay outside $I=[0,1]$**
+
+```{r echo = FALSE, fig.height = 3.5, fig.width = 12}
+data1 <- read.dta("./data/mroz.dta")
+data1$kids <- NA
+data1$kids[data1$kidslt6>0|data1$kidsge6>0] <- 1
+data1$kids[data1$kidslt6==0&data1$kidsge6==0] <- 0
+
+# Problem with predictions
+par(mfrow=c(1,1))
+mod2 <- lm(inlf ~ kids + age + educ + motheduc + fatheduc + city+ hours, data=data1)
+plot(mod2$fitted.values[mod2$fitted.values<1],jitter(mod2$model[,1][mod2$fitted.values<1],factor=0.12), bty="n", ylab="Actual Values", xlab="Predicted Values", pch=19, col=rgb(0,0,255,100,maxColorValue=255), main="Binary Dependent Variable", xlim=c(0,2), ylim=c(0,1))
+points(mod2$fitted.values[mod2$fitted.values>1],jitter(mod2$model[,1][mod2$fitted.values>1]), col=rgb(255,0,0,100,maxColorValue=255), pch=19)
+abline(v=1,col="red", lwd=2)
+text(1.4,.6,"Prediction >100%",col="red")
+```
+
+**Residuals if the dependent variable is binary:**
+
+```{r echo = FALSE, fig.height = 4, fig.width = 12}
+mod1 <- lm(wage ~ kids + age + educ, dat=data1) #kids + age + educ + motheduc + fatheduc + city+ hours
+par(mfrow=c(1,2))
+plot(mod1$residuals,mod1$fitted.values, bty="n", ylab="Predicted Values", xlab="Residuals", pch=19, col=rgb(0,0,255,100,maxColorValue=255), main="Continuous Dependent Variable")
+mod2 <- lm(inlf ~ kids + age + educ, dat=data1) # kids + age + educ + motheduc + fatheduc + city+ hours
+plot(mod2$residuals,mod2$fitted.values, bty="n", ylab="Predicted Values", xlab="Residuals", pch=19, col=rgb(0,0,255,100,maxColorValue=255), main="Binary Dependent Variable")
+```
+
+## Building a Model from Probability Theory
+
+- We want to make predictions in terms of probability
+- We can have a model like this: $P(y_i=1)={F(\beta_0 + \beta_1 x_i)}$ where $F(\cdot)$ should be a function which never returns values below 0 or above 1
+- There are two possibilities for $F(\cdot)$: cumulative normal ($\Phi$) or logistic ($\Delta$) distribution
+
+```{r echo = FALSE, fig.height = 3.5, fig.width = 10}
+x <- seq(from=-4, to=4, length.out=100)
+y <- exp(-x)/(1+exp(-x))^2
+Y <- 1/(1+exp(-x))
+plot(x,Y, main="Cumulative Distribution", type="l", col="darkorchid1", lwd=3, xlab=expression(paste(beta[0],"+",beta[1], "X")))
+curve(pnorm,from=-4, to=4, n=100, add=TRUE, col="darkorchid4", lwd=3)
+legend(-4,0.5, c("Logistic","Normal"), col=c("darkorchid1","darkorchid4"), lty = c(1,1),bty = "n", lwd=c(3,3))
+```
+
+## Logit and Probit
+
+-   We now have a model where $\hat y \in [0,1]$\
+    $\rightarrow$ All predictions are probabilities
+
+-   We have two possible models to use\
+    [$\rightarrow$ The logit model is based on the cumulative
+    logistic distribution ($\Delta$)]{}\
+    [$\rightarrow$ The probit model is based on the cumulative normal
+    distribution ($\Phi$)]{}
+
+We will use logit more often because we can write
+$\Delta(x) = \frac{1}{1 + \exp(-x)}$,\
+while probit models are tricky:
+$\Phi(x) = \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}\exp(\frac{-(x)^2}{2}) dx$
+
+## Logit Model
+
+The logit model is then:
+$P(y_i=1)=\frac{1}{1 + \exp(-\beta_0 - \beta_1 x_i)}$
+
+For $\beta_0 = 0$ and $\beta_1=2$ we get:
+
+```{r echo = FALSE, fig.height = 3.5}
+x <- seq(-2,2,length.out=1000)
+yhat1 <- 1/(1+exp(-2*x))
+plot(x,yhat1, ylab="P(Y=1)", type="l", lwd=3, col="blue")
+```
+
+### Logit Model: Example 1
+
+```{r echo = FALSE, fig.height = 3.5}
+set.seed(121)
+x <- seq(15000,120000,length.out=1000)
+x1 <- seq(-2,2,length.out=1000)
+yhat1 <- 1/(1+exp(-2*x1))
+plot(x,yhat1, ylab="P(Y=1), `Taxes Are Too High'", type="l", lwd=3, col="blue", xlab="Income in GBP", bty="n")
+points(rchisq(100,1)*20000,rep(0,100), pch=19)
+points(120000-rchisq(100,1)*20000,rep(1,100), pch=19)
+```
+
+-   We can make a prediction by calculating:
+    $P(y=1) = \frac{1}{1+\exp(-\beta_0 - \beta_1\cdot x)}$
+
+### Logit Model: Example 2
+
+```{r echo = FALSE, fig.height = 3.5}
+set.seed(121)
+x <- seq(15000,120000,length.out=1000)
+
+yhat <- 1/(1+exp(-2*x1))
+plot(x,yhat1, ylab="P(Y=1), `Taxes Are Too High'", type="l", lwd=3, col="blue", xlab="Income in GBP", bty="n")
+points(rchisq(100,1)*20000,rep(0,100), pch=19, col=rgb(40,40,40,30,maxColorValue=255))
+points(120000-rchisq(100,1)*20000,rep(1,100), pch=19, col=rgb(40,40,40,30,maxColorValue=255))
+# first marginal effect
+segments(30000,0,30000,0.05,col="red",lty=2, lwd=2)
+segments(30000,0.05,1000,0.05,col="red",lty=2, lwd=2)
+segments(40000,0,40000,0.11,col="red",lty=2, lwd=2)
+segments(40000,0.11,1000,0.11,col="red",lty=2, lwd=2)
+segments(11500,0.05,11500,0.11,col="purple", lwd=3)
+
+# second marginal effect
+segments(60000,0,60000,0.37,col="red",lty=2, lwd=2)
+segments(60000,0.37,1000,0.37,col="red",lty=2, lwd=2)
+segments(70000,0,70000,0.55,col="red",lty=2, lwd=2)
+segments(70000,0.55,1000,0.55,col="red",lty=2, lwd=2)
+segments(11500,0.55,11500,0.37,col="purple", lwd=3)
+```
+
+-   Depending on where we add £1,000 we get a different marginal
+    effect\
+    [$\rightarrow$ because of our different functional form
+    (s-shaped)]{}
+
+### Logit Model: Example 3
+
+```{r echo = FALSE, fig.height = 3.5}
+set.seed(121)
+x <- seq(15000,120000,length.out=1000)
+yhat <- 1/(1+exp(1-2* seq(-2,2,length.out=1000)))
+plot(x,yhat, ylab="P(Y=1), `Taxes Are Too High'", type="l", lwd=3, col="blue", xlab="Income in GBP", bty="n", ylim=c(0,1))
+yhat <- 1/(1+exp(-2* seq(-2,2,length.out=1000)))
+points(x,yhat, type="l", col="red", lwd=3)
+yhat <- 1/(1+exp(1+1* seq(-2,2,length.out=1000)))
+points(x,yhat, type="l", col="green", lwd=3)
+legend(20000,.9,legend=c("P(y=1)=F(1-2*x)","P(y=1)=F(0-2*x)","P(y=1)=F(1-1*x)"), col=c("red","blue","green"), lwd=c(3,3,3), bty="n")
+```
+
+- A positive $\beta_1$ makes the s-curve increase.
+- A smaller $\beta_0$ shifts the s-curve to the right.
+- A negative $\beta_1$ makes the s-curve decrease.
+
+

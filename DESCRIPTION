@@ -1,0 +1,5 @@
+Package: binary_models
+Title: Binary Models
+Version: 0.1.0
+Imports: bookdown, tidyverse
+Remotes: altaf-ali/binary_models

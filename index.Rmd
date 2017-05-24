@@ -1,0 +1,20 @@
+---
+title: "Binary Models"
+site: bookdown::bookdown_site
+github-repo: altaf-ali/binary_models
+---
+
+# Introduction
+
+Many questions we seek to answer in social science research are binary: Will the Tories win the next election? Will Brexit help or hurt the economy? Will a country go to war? To shed light on these kinds of questions, we employ logistic regression. In this workshop we cover the theory of regression with a binary dependent variable and then turn to the practical application in R. We will estimate our own logistic regression, show by how much our model improves upon prior knowledge and illustrate our results such that an audience without statistical knowledge can interpret the results. Students should be familiar with R as well as basic concepts of statistics such as the level of measurement of a variable, the mean and linear regression.
+
+We cover the following:
+
+- Theory of regression with a binary dependent variable
+- Estimating a logistic regression in R
+- Assessing the quality of our model
+- Making predictions based on our model
+
+----
+
+*Last Updated: `r format(Sys.time(), "%b %d, %Y %l:%M %p")`*

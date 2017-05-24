@@ -1,0 +1,22 @@
+# Exercises
+
+- **[Dataset](http://uclspp.github.io/PUBLG100/data/mroz.dta)**
+- **[Codebook](http://uclspp.github.io/PUBLG100/data/mroz.txt)**
+
+1. Select at least 4 predictors (including `age` but excluding `exper`) to explain women in the labor force and provide theoretical justification for your selection.
+
+1. Estimate a model using the predictors you selected, present your findings and provide an assessment of the model quality.
+
+1. Does the addition of `exper` to your model improve its predictive performance?
+
+1. Based on your model, what's the probability of a 40 year old woman with 12 years of experience to be in the labor force? Make sure to include a confidence interval for your prediction.
+
+1. Compare the effects of experience in the labor market on the outcome variable under two hypothetical scenarios:
+    - A woman with age in the 25th percentile
+    - A woman with age in the 75th percentile
+    
+1. Provide a visualization to illustrate your findings.
+
+
+Reference: Mroz, T.A. (1987): "The Sensitiviy of an Empirical Model of Married Women's Hours of Work to Economic and Statistical Assumptions", Econometrica, 55, 765-799.
+
