@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Binary Models</title>
+  <meta name="description" content="Binary Models">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Binary Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="altaf-ali/binary_models" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Binary Models" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="hands-on-tutorial.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/readthedocs.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html"><i class="fa fa-check"></i><b>2</b> Binary Models – Logit and Probit</a><ul>
+<li class="chapter" data-level="2.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#the-linear-probability-model"><i class="fa fa-check"></i><b>2.1</b> The Linear Probability Model</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#advantages"><i class="fa fa-check"></i><b>2.1.1</b> Advantages</a></li>
+<li class="chapter" data-level="2.1.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#disadvantages"><i class="fa fa-check"></i><b>2.1.2</b> Disadvantages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#building-a-model-from-probability-theory"><i class="fa fa-check"></i><b>2.2</b> Building a Model from Probability Theory</a></li>
+<li class="chapter" data-level="2.3" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-and-probit"><i class="fa fa-check"></i><b>2.3</b> Logit and Probit</a></li>
+<li class="chapter" data-level="2.4" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model"><i class="fa fa-check"></i><b>2.4</b> Logit Model</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-1"><i class="fa fa-check"></i><b>2.4.1</b> Logit Model: Example 1</a></li>
+<li class="chapter" data-level="2.4.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-2"><i class="fa fa-check"></i><b>2.4.2</b> Logit Model: Example 2</a></li>
+<li class="chapter" data-level="2.4.3" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-3"><i class="fa fa-check"></i><b>2.4.3</b> Logit Model: Example 3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html"><i class="fa fa-check"></i><b>3</b> Hands-on Tutorial</a><ul>
+<li class="chapter" data-level="3.1" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#application-to-british-election-study-dataset"><i class="fa fa-check"></i><b>3.1</b> Application to British Election Study Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#loading-data"><i class="fa fa-check"></i><b>3.2</b> Loading Data</a></li>
+<li class="chapter" data-level="3.3" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#regression-with-a-binary-dependent-variable"><i class="fa fa-check"></i><b>3.3</b> Regression with a Binary Dependent Variable</a></li>
+<li class="chapter" data-level="3.4" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#model-quality"><i class="fa fa-check"></i><b>3.4</b> Model Quality</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#joint-hypothesis-testing"><i class="fa fa-check"></i><b>3.4.1</b> Joint hypothesis testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Binary Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="binary-models-logit-and-probit" class="section level1">
+<h1><span class="header-section-number">2</span> Binary Models – Logit and Probit</h1>
+<p>Binary dependent variables are frequent in social science research…</p>
+<ul>
+<li>… why does somebody vote or not?</li>
+<li>… why does a country go to war or not?</li>
+<li>… why does a legislator vote <em>yes</em> or <em>no</em>?</li>
+<li>… why do some countries have the death penalty and other not?</li>
+</ul>
+<div id="the-linear-probability-model" class="section level2">
+<h2><span class="header-section-number">2.1</span> The Linear Probability Model</h2>
+<p>The linear probability model relies on linear regression to analyze binary variables.</p>
+\begin{eqnarray}
+y_i &amp; = &amp; \beta_0 + \beta_1 \cdot x_{1i} + \beta_2 \cdot x_{2i}+ ... + \beta_k \cdot x_{ki} + \varepsilon_{i}\\
+Pr(y_i=1|x_1, x_2, ...) &amp; = &amp; \beta_0 + \beta_1 \cdot x_{1i} + \beta_2 \cdot x_{2i}+ ... + \beta_k \cdot x_{ki} \\
+\end{eqnarray}
+<div id="advantages" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Advantages</h3>
+<ul>
+<li>We can use a well-known model for a new class of phenomena</li>
+<li>Easy to interpret the marginal effects of <span class="math inline">\(x\)</span> variables</li>
+</ul>
+</div>
+<div id="disadvantages" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Disadvantages</h3>
+<p>The linear model needs a continuous dependent variable, if the dependent variable is binary we run into problems:</p>
+<ul>
+<li><p>Predictions, <span class="math inline">\(\hat y\)</span>, are interpreted as probability for <span class="math inline">\(y=1\)</span><br />
+[<span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(P(y=1) = \hat y = \beta_0\)</span>+<span class="math inline">\(\beta_1 x\)</span>, can be above 1 if <span class="math inline">\(x\)</span> is large enough]{}<br />
+[<span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(P(y=0) = 1- \hat y = 1 - \beta_0\)</span>+<span class="math inline">\(\beta_1 x\)</span>, can be below 0 if <span class="math inline">\(x\)</span> is small enough]{}</p></li>
+<li><p>The errors will not have a constant variance.<br />
+[<span class="math inline">\(\rightarrow\)</span> For a given <span class="math inline">\(x\)</span> the residual can be either (1-<span class="math inline">\(\beta_0\)</span>-<span class="math inline">\(\beta_1 x\)</span>) or (<span class="math inline">\(\beta_0\)</span>+<span class="math inline">\(\beta_1 x\)</span>)]{}</p></li>
+<li><p>The linear function might be wrong<br />
+[<span class="math inline">\(\rightarrow\)</span> Imagine you buy a car. Having an additional £1000 has a very different effect if you are broke or if you already have another £12,000 for a car.]{}</p></li>
+</ul>
+<p><strong>Predictions can lay outside <span class="math inline">\(I=[0,1]\)</span></strong></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="1152" /></p>
+<p><strong>Residuals if the dependent variable is binary:</strong></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="1152" /></p>
+</div>
+</div>
+<div id="building-a-model-from-probability-theory" class="section level2">
+<h2><span class="header-section-number">2.2</span> Building a Model from Probability Theory</h2>
+<ul>
+<li>We want to make predictions in terms of probability</li>
+<li>We can have a model like this: <span class="math inline">\(P(y_i=1)={F(\beta_0 + \beta_1 x_i)}\)</span> where <span class="math inline">\(F(\cdot)\)</span> should be a function which never returns values below 0 or above 1</li>
+<li>There are two possibilities for <span class="math inline">\(F(\cdot)\)</span>: cumulative normal (<span class="math inline">\(\Phi\)</span>) or logistic (<span class="math inline">\(\Delta\)</span>) distribution</li>
+</ul>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+</div>
+<div id="logit-and-probit" class="section level2">
+<h2><span class="header-section-number">2.3</span> Logit and Probit</h2>
+<ul>
+<li><p>We now have a model where <span class="math inline">\(\hat y \in [0,1]\)</span><br />
+<span class="math inline">\(\rightarrow\)</span> All predictions are probabilities</p></li>
+<li><p>We have two possible models to use<br />
+[<span class="math inline">\(\rightarrow\)</span> The logit model is based on the cumulative logistic distribution (<span class="math inline">\(\Delta\)</span>)]{}<br />
+[<span class="math inline">\(\rightarrow\)</span> The probit model is based on the cumulative normal distribution (<span class="math inline">\(\Phi\)</span>)]{}</p></li>
+</ul>
+<p>We will use logit more often because we can write <span class="math inline">\(\Delta(x) = \frac{1}{1 + \exp(-x)}\)</span>,<br />
+while probit models are tricky: <span class="math inline">\(\Phi(x) = \int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}\exp(\frac{-(x)^2}{2}) dx\)</span></p>
+</div>
+<div id="logit-model" class="section level2">
+<h2><span class="header-section-number">2.4</span> Logit Model</h2>
+<p>The logit model is then: <span class="math inline">\(P(y_i=1)=\frac{1}{1 + \exp(-\beta_0 - \beta_1 x_i)}\)</span></p>
+<p>For <span class="math inline">\(\beta_0 = 0\)</span> and <span class="math inline">\(\beta_1=2\)</span> we get:</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="logit-model-example-1" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Logit Model: Example 1</h3>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<ul>
+<li>We can make a prediction by calculating: <span class="math inline">\(P(y=1) = \frac{1}{1+\exp(-\beta_0 - \beta_1\cdot x)}\)</span></li>
+</ul>
+</div>
+<div id="logit-model-example-2" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Logit Model: Example 2</h3>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<ul>
+<li>Depending on where we add £1,000 we get a different marginal effect<br />
+[<span class="math inline">\(\rightarrow\)</span> because of our different functional form (s-shaped)]{}</li>
+</ul>
+</div>
+<div id="logit-model-example-3" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Logit Model: Example 3</h3>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<ul>
+<li>A positive <span class="math inline">\(\beta_1\)</span> makes the s-curve increase.</li>
+<li>A smaller <span class="math inline">\(\beta_0\)</span> shifts the s-curve to the right.</li>
+<li>A negative <span class="math inline">\(\beta_1\)</span> makes the s-curve decrease.</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hands-on-tutorial.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

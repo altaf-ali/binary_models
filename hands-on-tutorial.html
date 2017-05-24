@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Binary Models</title>
+  <meta name="description" content="Binary Models">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Binary Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="altaf-ali/binary_models" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Binary Models" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="binary-models-logit-and-probit.html">
+<link rel="next" href="exercises.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/readthedocs.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html"><i class="fa fa-check"></i><b>2</b> Binary Models – Logit and Probit</a><ul>
+<li class="chapter" data-level="2.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#the-linear-probability-model"><i class="fa fa-check"></i><b>2.1</b> The Linear Probability Model</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#advantages"><i class="fa fa-check"></i><b>2.1.1</b> Advantages</a></li>
+<li class="chapter" data-level="2.1.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#disadvantages"><i class="fa fa-check"></i><b>2.1.2</b> Disadvantages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#building-a-model-from-probability-theory"><i class="fa fa-check"></i><b>2.2</b> Building a Model from Probability Theory</a></li>
+<li class="chapter" data-level="2.3" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-and-probit"><i class="fa fa-check"></i><b>2.3</b> Logit and Probit</a></li>
+<li class="chapter" data-level="2.4" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model"><i class="fa fa-check"></i><b>2.4</b> Logit Model</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-1"><i class="fa fa-check"></i><b>2.4.1</b> Logit Model: Example 1</a></li>
+<li class="chapter" data-level="2.4.2" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-2"><i class="fa fa-check"></i><b>2.4.2</b> Logit Model: Example 2</a></li>
+<li class="chapter" data-level="2.4.3" data-path="binary-models-logit-and-probit.html"><a href="binary-models-logit-and-probit.html#logit-model-example-3"><i class="fa fa-check"></i><b>2.4.3</b> Logit Model: Example 3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html"><i class="fa fa-check"></i><b>3</b> Hands-on Tutorial</a><ul>
+<li class="chapter" data-level="3.1" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#application-to-british-election-study-dataset"><i class="fa fa-check"></i><b>3.1</b> Application to British Election Study Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#loading-data"><i class="fa fa-check"></i><b>3.2</b> Loading Data</a></li>
+<li class="chapter" data-level="3.3" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#regression-with-a-binary-dependent-variable"><i class="fa fa-check"></i><b>3.3</b> Regression with a Binary Dependent Variable</a></li>
+<li class="chapter" data-level="3.4" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#model-quality"><i class="fa fa-check"></i><b>3.4</b> Model Quality</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="hands-on-tutorial.html"><a href="hands-on-tutorial.html#joint-hypothesis-testing"><i class="fa fa-check"></i><b>3.4.1</b> Joint hypothesis testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Binary Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hands-on-tutorial" class="section level1">
+<h1><span class="header-section-number">3</span> Hands-on Tutorial</h1>
+<p>Let’s start by loading the required packages:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign) 
+<span class="kw">library</span>(texreg) 
+<span class="kw">library</span>(lmtest)
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<p>Clear the environment</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
+<div id="application-to-british-election-study-dataset" class="section level2">
+<h2><span class="header-section-number">3.1</span> Application to British Election Study Dataset</h2>
+<p>We use a subset of the 2005 face-to-face British post election study to explain turnout.</p>
+<p>Disclaimer: We use a slightly modified version of the data set. For your own research please visit the <a href="http://www.britishelectionstudy.com">British Election Study website</a> and download the original dataset.</p>
+<p>You can download the dataset and codebook from the links below:</p>
+<ul>
+<li><strong><a href="http://uclspp.github.io/PUBLG100/data/bes.dta">Dataset</a></strong></li>
+<li><strong><a href="http://uclspp.github.io/PUBLG100/data/bes_codebook.txt">Codebook</a></strong></li>
+</ul>
+<p>Most of the variable names in the dataset are self explanatory, but ones that need some clarification are listed below:</p>
+<table style="width:104%;">
+<colgroup>
+<col width="20%" />
+<col width="54%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+<th align="left">Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Turnout</td>
+<td align="left">Turnout at 2005 Brit election</td>
+<td align="left">No (0); Yes (1)</td>
+</tr>
+<tr class="even">
+<td align="left">Gender</td>
+<td align="left">R’s gender</td>
+<td align="left">1 (male); 0 (female)</td>
+</tr>
+<tr class="odd">
+<td align="left">LeftRightSelf</td>
+<td align="left">R’s self placement on left-right</td>
+<td align="left">1 (left) - 11 (right)</td>
+</tr>
+<tr class="even">
+<td align="left">CivicDutyIndex</td>
+<td align="left">Sum of scores on CivicDuty1-7</td>
+<td align="left">high values mean high civic duty</td>
+</tr>
+<tr class="odd">
+<td align="left">polinfoindex</td>
+<td align="left">Correctly answered knowledge questions</td>
+<td align="left">0 (low) - 8 (high)</td>
+</tr>
+<tr class="even">
+<td align="left">edu*</td>
+<td align="left">yrs of education</td>
+<td align="left">binary</td>
+</tr>
+<tr class="odd">
+<td align="left">in.school</td>
+<td align="left">R still in school</td>
+<td align="left">binary</td>
+</tr>
+<tr class="even">
+<td align="left">in.uni</td>
+<td align="left">R attends university</td>
+<td align="left">binary</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="loading-data" class="section level2">
+<h2><span class="header-section-number">3.2</span> Loading Data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw">read.dta</span>(<span class="st">&quot;bes.dta&quot;</span>)</code></pre></div>
+<p>Let’s convert the <code>Gender</code> variable to a factor to help us with the interpretation of the results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes$Gender &lt;-<span class="st"> </span><span class="kw">factor</span>(bes$Gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>))</code></pre></div>
+<p>Now take a look at the first few observations to see what the dataset looks like</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(bes)</code></pre></div>
+<pre><code>##   cs_id Turnout Vote2001 Income Age Gender PartyID Influence Attention
+## 1     1       0        1      4  76 Female       1         1         8
+## 2     2       1        1      5  32   Male       0         3         8
+## 3     3       1       NA     NA  NA   &lt;NA&gt;      NA        NA        NA
+## 4     4       0        1      1  35 Female       0         1         1
+## 5     5       1        1      7  56   Male       0         1         9
+## 6     6       1        1      4  76 Female       1         4         8
+##   Telephone LeftrightSelf CivicDutyIndex polinfoindex edu15 edu16 edu17
+## 1         1             7             20            7     1     0     0
+## 2         1             6             15            5     0     1     0
+## 3        NA            NA             NA           NA    NA    NA    NA
+## 4         0             5             26            1     0     1     0
+## 5         1             9             16            7     0     0     1
+## 6         1             8             16            4     0     1     0
+##   edu18 edu19plus in_school in_uni CivicDutyScores
+## 1     0         0         0      0      -0.6331136
+## 2     0         0         0      0       1.4794579
+## 3    NA        NA        NA     NA              NA
+## 4     0         0         0      0      -2.1466281
+## 5     0         0         0      0       1.0324940
+## 6     0         0         0      0       0.3658024</code></pre>
+<p>We have a number of missing values. Let’s remove them from the dataset but we want to make sure we only remove observations when the variables we are interested in are missing. We’ll follow the same procedure we used in week 5 for removing NA’s.</p>
+<p>While this method might seem tedious, it ensures that we’re not dropping observations unnecessarily.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bes &lt;-<span class="st"> </span><span class="kw">filter</span>(bes, 
+              !<span class="kw">is.na</span>(Turnout), 
+              !<span class="kw">is.na</span>(Income), 
+              !<span class="kw">is.na</span>(polinfoindex), 
+              !<span class="kw">is.na</span>(Gender), 
+              !<span class="kw">is.na</span>(edu15), 
+              !<span class="kw">is.na</span>(edu17), 
+              !<span class="kw">is.na</span>(edu18), 
+              !<span class="kw">is.na</span>(edu19plus), 
+              !<span class="kw">is.na</span>(in_school), 
+              !<span class="kw">is.na</span>(in_uni))</code></pre></div>
+</div>
+<div id="regression-with-a-binary-dependent-variable" class="section level2">
+<h2><span class="header-section-number">3.3</span> Regression with a Binary Dependent Variable</h2>
+<p>We use the generalized linear model function <code>glm()</code> to estimate a logistic regression. The syntax is very similar to other regression functions we’re already familiar with, for example <code>lm()</code> and <code>plm()</code>. The <code>glm()</code> function can be used to estimate many different models. We tell <code>glm()</code> that we’ve binary dependent variable and we want to use the cumulative logistic link function using the <code>family = binomial(link = &quot;logit&quot;)</code> argument:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout ~<span class="st"> </span>Income +<span class="st"> </span>polinfoindex +<span class="st"> </span>Gender +<span class="st"> </span>
+<span class="st">                </span>edu15 +<span class="st"> </span>edu17 +<span class="st"> </span>edu18 +<span class="st"> </span>edu19plus +<span class="st"> </span>in_school +<span class="st"> </span>in_uni, 
+              <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>),
+              <span class="dt">data =</span> bes)
+
+<span class="kw">screenreg</span>(model1)</code></pre></div>
+<pre><code>## 
+## ============================
+##                 Model 1     
+## ----------------------------
+## (Intercept)        -1.14 ***
+##                    (0.15)   
+## Income              0.03    
+##                    (0.02)   
+## polinfoindex        0.38 ***
+##                    (0.02)   
+## GenderMale         -0.35 ***
+##                    (0.08)   
+## edu15               0.38 ***
+##                    (0.10)   
+## edu17               0.46 ** 
+##                    (0.15)   
+## edu18               0.11    
+##                    (0.14)   
+## edu19plus           0.24 *  
+##                    (0.12)   
+## in_school           0.15    
+##                    (0.39)   
+## in_uni             -0.72 ** 
+##                    (0.25)   
+## ----------------------------
+## AIC              4401.20    
+## BIC              4464.53    
+## Log Likelihood  -2190.60    
+## Deviance         4381.20    
+## Num. obs.        4161       
+## ============================
+## *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</code></pre>
+</div>
+<div id="model-quality" class="section level2">
+<h2><span class="header-section-number">3.4</span> Model Quality</h2>
+<p>To assess the predictive accuracy of our model we will check the percentage of cases that it correctly predicts. Let’s look the turnout data first. According to the codebook, <code>0</code> means the person did not vote, and <code>1</code> means they voted.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(bes$Turnout) </code></pre></div>
+<pre><code>## 
+##    0    1 
+## 1079 3082</code></pre>
+<p>If we look at the mean of Turnout we will see that is <code>0.74</code>. That means <code>74.07%</code> of the respondents said that they turned out to vote. If you predict for every respondent that they voted, you will be right for <code>74.07%</code> of the people. That is the naive guess and the benchmark for our model. If we predict more than <code>74.07%</code> of cases correctly our model adds value.</p>
+<p>Below we will estimate predicted probabilities for each observation. That is, the probability our model assigns that a respondent will turn out to vote for every person in our data. To do so we use the <code>predict()</code> function with the following the usage syntax:</p>
+<pre><code>predict(model, type = &quot;response&quot;)</code></pre>
+<p>Type <code>help(predict.glm)</code> for information on all arguments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predicted_probs &lt;-<span class="st"> </span><span class="kw">predict</span>(model1, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</code></pre></div>
+<p>Now that we have assigned probabilities to people turning out to vote, we have to translate those into outcomes. Turnout is binary. A straightforward way would be to say: we predict that all people with a predicted probability above <code>50%</code> vote and all with predicted probabilities below or equal to <code>50%</code> abstain.</p>
+<p>Using the <code>50%</code> threshold, we create a new variable <code>expected_values</code> that is <code>1</code> if our predicted probability is larger than <code>0.5</code> and <code>0</code> otherwise.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(predicted_probs &gt;<span class="st"> </span><span class="fl">0.5</span>)</code></pre></div>
+<p>NOTE: The condition <code>predicted_probs &gt; 0.5</code> gives us <code>FASLE/TRUE</code>, but since our dataset uses <code>0/1</code> for the <code>Turnout</code> variable, we convert it to a numeric value using <code>as.numeric()</code> function.</p>
+<p>All we have to do now is to compare our expected values of turnout against the actually observed values of turnout. We want our predictions to coincide with the actually observed outcomes. But we need to be aware of two types of errors we can make:</p>
+<table style="width:99%;">
+<colgroup>
+<col width="52%" />
+<col width="45%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">- A type I error is a false positive. It is like crying wolf when there is nothing there (we mistakenly reject a true null hypothesis). <br><br>- A type II error is a false negative. It is like not noticing the wolf and finding all your sheep dead the next morning (we fail to reject a false null hypothesis).</td>
+<td align="left"><img src="img/confusion_matrix.png" alt="" /></td>
+</tr>
+</tbody>
+</table>
+<p>The threshold that we set is directly related to the proportion of type I to type II errors. Increasing the threshold will reduce the number of false positives but increase the number of false negatives and vice versa. The default choice is a threshold of <code>0.5</code>. However, you may imagine situations where one type of error is more costly than the other. For example, given the cost of civil wars, a model predicting civil war may focus on reducing false negatives at the cost of a larger fraction of false positives.</p>
+<p>We proceed by producing a table of predictions against actual outcomes. With that we will calculate the percentage of correctly predicted cases and compare that to the naive guess. We have the actually observed cases in our dependent variable (<code>Turnout</code>). The table is just a frequency table. The percentage of correctly predicted cases is simply the sum of correctly predicted cases over the number of cases.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">observed &lt;-<span class="st"> </span>bes$Turnout
+
+outcome &lt;-<span class="st"> </span><span class="kw">table</span>(observed,expected)
+outcome</code></pre></div>
+<pre><code>##         expected
+## observed    0    1
+##        0  160  919
+##        1  108 2974</code></pre>
+<p>Now let’s find out how many we correctly predicted and how many we got wrong. You can manually add the numbers if you want, but it’s simple enough to take the values out of the 2x2 table:</p>
+<ul>
+<li>Correct negatives are in row <code>1</code>, column <code>1</code></li>
+<li>Correct positives are in row <code>2</code>, column <code>2</code></li>
+<li>All others are incorrect</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(outcome[<span class="dv">1</span>,<span class="dv">1</span>] +<span class="st"> </span>outcome[<span class="dv">2</span>,<span class="dv">2</span>]) /<span class="st"> </span><span class="kw">sum</span>(outcome)</code></pre></div>
+<pre><code>## [1] 0.7531843</code></pre>
+<p>Now let’s remember what the actual turnout was:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(bes$Turnout)</code></pre></div>
+<pre><code>## 
+##    0    1 
+## 1079 3082</code></pre>
+<p>In order to calculate the naive guess, we simply divide the mode by the total number of observations</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3082</span> /<span class="st"> </span>(<span class="dv">1079</span> +<span class="st"> </span><span class="dv">3082</span>)</code></pre></div>
+<pre><code>## [1] 0.7406873</code></pre>
+<p>You can see that our model outperforms the naive guess slightly. The more lopsided the distribution of your binary dependent variable, the harder it is to build a successful model.</p>
+<div id="joint-hypothesis-testing" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Joint hypothesis testing</h3>
+<p>We will add two more explanatory variables to our model: <code>Influence</code> and <code>Age</code>. <code>Influence</code> corresponds to a theory we want to test while <code>Age</code> is a socio-economic control variable.</p>
+<p>We want to test two theories: the rational voter model and the resource theory.</p>
+<ul>
+<li><p>Influence operationalises a part of the rational voter theory. In that theory citizens are more likely to turnout the more they belive that their vote matters. The variable <code>Influence</code> measures the subjective feeling of being able to influence politics.</p></li>
+<li><p>The variables <code>Income</code> and <code>polinfoindex</code> correspond to a second theory which states that people who have more cognitive and material resources are more likely to participate in politics.</p></li>
+</ul>
+<p>Depending on whether the coefficients corresponding to the respective theories are significant or not, we can say something about whether these theories help to explain turnout.</p>
+<p>The remaining variables for gender, education and the added variable <code>Age</code> are socio-economic controls. We added age because previous research has shown that political participation changes with the life cycle.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">glm</span>(Turnout ~<span class="st"> </span>Income +<span class="st"> </span>polinfoindex +<span class="st"> </span>Influence +<span class="st"> </span>Gender +<span class="st"> </span>Age +<span class="st"> </span>
+<span class="st">                </span>edu15 +<span class="st"> </span>edu17 +<span class="st"> </span>edu18 +<span class="st"> </span>edu19plus +<span class="st"> </span>in_school +<span class="st"> </span>in_uni, 
+              <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> bes)
+
+<span class="kw">screenreg</span>(<span class="kw">list</span>(model1, model2))</code></pre></div>
+<pre><code>## 
+## ==========================================
+##                 Model 1       Model 2     
+## ------------------------------------------
+## (Intercept)        -1.14 ***     -3.90 ***
+##                    (0.15)        (0.22)   
+## Income              0.03          0.15 ***
+##                    (0.02)        (0.02)   
+## polinfoindex        0.38 ***      0.25 ***
+##                    (0.02)        (0.02)   
+## GenderMale         -0.35 ***     -0.36 ***
+##                    (0.08)        (0.08)   
+## edu15               0.38 ***     -0.34 ** 
+##                    (0.10)        (0.11)   
+## edu17               0.46 **       0.36 *  
+##                    (0.15)        (0.16)   
+## edu18               0.11          0.14    
+##                    (0.14)        (0.15)   
+## edu19plus           0.24 *        0.01    
+##                    (0.12)        (0.13)   
+## in_school           0.15          1.13 ** 
+##                    (0.39)        (0.40)   
+## in_uni             -0.72 **      -0.05    
+##                    (0.25)        (0.27)   
+## Influence                         0.21 ***
+##                                  (0.02)   
+## Age                               0.05 ***
+##                                  (0.00)   
+## ------------------------------------------
+## AIC              4401.20       4003.90    
+## BIC              4464.53       4079.90    
+## Log Likelihood  -2190.60      -1989.95    
+## Deviance         4381.20       3979.90    
+## Num. obs.        4161          4161       
+## ==========================================
+## *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</code></pre>
+<p>The variables corresponding to the resource theory are <code>Income</code> and <code>polinfoindex</code>. In our model 2 (the one we interpret), both more income and more interest in politics are related to a higher probability to turn out to vote. That is in line with the theory. Interestingly, income was previously insignificant in model 1. It is quite likely that model 1 suffered from omitted variable bias.</p>
+<p>As the rational voter model predicts, a higher subjective probability to cast a decisive vote, which we crudly proxy by the feeling to be able to influence politics, does correspond to a higher probability to vote as indicated by the positive significant effect of our <code>Influence</code> variable.</p>
+<p>We will test if model 2 does better at predicting turnout than model 1. We use the likelihood ratio test. This is warranted because we added two variables and corresponds to the F-test in the OLS models estimated before. You can see values for the logged likelihood in the regression table. You cannot in general say whether a value for the likelihood is small or large but you can use it to compare models that are based on the same sample. A larger log-likelihood is better. Looking at the regression table we see that the log-likelihood is larger in model 2 than in model 1.</p>
+<p>We use the <code>lrtest()</code> function from the <code>lmtest</code> package to test whether that difference is statistically significant. The syntax is the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lrtest</span>(model1, model2)</code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: Turnout ~ Income + polinfoindex + Gender + edu15 + edu17 + edu18 + 
+##     edu19plus + in_school + in_uni
+## Model 2: Turnout ~ Income + polinfoindex + Influence + Gender + Age + 
+##     edu15 + edu17 + edu18 + edu19plus + in_school + in_uni
+##   #Df  LogLik Df Chisq Pr(&gt;Chisq)    
+## 1  10 -2190.6                        
+## 2  12 -1990.0  2 401.3  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The p-value in the likelihood ratio test is smaller than <code>0.05</code>. Therefore, the difference between the two log-likelihoods is statistically significant which means that model 2 is better at explaining turnout.</p>
+<p>Now let’s see if AIC and BIC agree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(model1, model2)</code></pre></div>
+<pre><code>##        df      AIC
+## model1 10 4401.200
+## model2 12 4003.901</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">BIC</span>(model1, model2) </code></pre></div>
+<pre><code>##        df      BIC
+## model1 10 4464.535
+## model2 12 4079.903</code></pre>
+<p>According to both AIC and BIC, model 2 has a better fit.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="binary-models-logit-and-probit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercises.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
