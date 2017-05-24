@@ -1,5 +1,6 @@
 rmd_files: [
   "index.Rmd",
+  "acknowledgments.Rmd",
   "binary_models.Rmd",
   "tutorial.Rmd",
   "exercises.Rmd"
