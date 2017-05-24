@@ -1,4 +1,4 @@
-# Tutorial
+# Hands-on Tutorial
 
 Let's start by loading the required packages:
 
