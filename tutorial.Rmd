@@ -215,3 +215,5 @@ BIC(model1, model2)
 
 According to both AIC and BIC, model 2 has a better fit.
 
+## Exercises
+
