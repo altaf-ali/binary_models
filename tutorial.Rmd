@@ -216,3 +216,128 @@ BIC(model1, model2)
 
 According to both AIC and BIC, model 2 has a better fit.
 
+## Interpretation with Zelig
+
+Since we cannot directly estimate the marginal effects of the independent variables from a logistic regression model, we use `Zelig` to help us with the interpretation. We pick meaningful scenarios and predict the probability that a person will vote based on the scenarios. What are meaningful scenarios? A meaningful scenario is a set of covariate values that corresponds to some case that is interesting in reality. For example, you may want to compare a women with 18 years of education to a man with 18 years of education while keeping all other variables at their means, medians or modes.
+
+First, we re-estimate our previous model using `Zelig`. 
+
+NOTE: Since we're estimating a logistic regression model, we use `model = "logit"` instead of `model = "ls"` like we've done in the past.
+
+```{r}
+z.out <- zelig(Turnout ~ Income + polinfoindex + Influence + Gender + Age + 
+                 edu15 + edu17 + edu18 + edu19plus + in_school + in_uni, 
+               model = "logit", 
+               data = bes)
+```
+
+In order to compare the average women with 18 years of education to the average man with 18 years of education, `Gender` to either `Male` or `Female`, `edu18` to `1` and all other binary variables to their modes, ordinally scaled variables to their medians and interval scaled variables to their means.
+
+```{r echo = FALSE}
+set.seed(666)
+```
+
+```{r}
+x.male <- setx(z.out, 
+               Gender = "Male", edu18 = 1, 
+               Age = mean(bes$Age),
+               Income = mean(bes$Income), 
+               polinfoindex = mean(bes$polinfoindex), 
+               Influence = mean(bes$Influence),  
+               edu15 = 0, edu17 = 0, edu19plus = 0, in_school = 0, in_uni = 0)
+
+x.female <- setx(z.out, Gender = "Female", edu18 = 1, 
+                 Age = mean(bes$Age),
+                 Income = mean(bes$Income), 
+                 polinfoindex = mean(bes$polinfoindex), 
+                 Influence = mean(bes$Influence),  
+                 edu15 = 0, edu17 = 0, edu19plus = 0, in_school = 0, in_uni = 0)
+
+s.out <- sim(z.out, x.male, x1 = x.female)
+summary(s.out)
+```
+
+```{r echo = FALSE} 
+# IGNORE THESE FUNCTIONS. They are used for generating course website
+get_sim_out <- function(x, i, j) {
+  sprintf("`%d%%`", round(mean(x$sim.out[[i]][[j]][[1]])*100))
+}
+
+get_margin_of_error <- function(x, i, j, s = "") {
+  qi <- x$sim.out[[i]][[j]][[1]][,1]
+  quantiles <- quantile(qi, c(0.025, 0.975))
+  sprintf("`%d%s`", round(((quantiles[2] - quantiles[1])/2)*100), s)
+}
+
+get_ci_low <- function(x, i, j) {
+  qi <- x$sim.out[[i]][[j]][[1]][,1]
+  quantiles <- quantile(qi, c(0.025, 0.975))
+  sprintf("`%d`", round(min(quantiles)*100))
+}
+
+get_ci_high <- function(x, i, j) {
+  qi <- x$sim.out[[i]][[j]][[1]][,1]
+  quantiles <- quantile(qi, c(0.025, 0.975))
+  sprintf("`%d`", round(max(quantiles)*100))
+}
+```
+
+If you're not familiar with how to interpret Zelig simulation summary, then click at the link below for an annotated example:
+
+<a href="https://uclspp.github.io/PUBLG100/faq/zelig_sim.html" type="button" class="btn btn-info">Interpreting Zelig Simulation</a>
+
+For the average woman (in our sample) with `18` years of education, we predict a probability of `r get_sim_out(s.out, "x1", "ev")` that she will vote. Our uncertainty is plus and minus `r get_margin_of_error(s.out, "x1", "ev", "%")` on the `95%` confidence level. Note that we've rounded up the numbers just to simplify the interpretation.
+
+For her male counterpart, we predict the probability of turnout to be `r get_sim_out(s.out, "x", "ev")` (plus and minus `r get_margin_of_error(s.out, "x", "ev", "%")` based on the `95%` confidence interval). Is the difference between them statistically significant or put differently is our hypothetical woman more likely to vote than our hypothetical man?
+
+To check that we look at the first difference. The difference is `r get_sim_out(s.out, "x1", "fd")` percentage points on average and between `r get_ci_low(s.out, "x1", "fd")` percentage points and `r get_ci_high(s.out, "x1", "fd")` percentage points based on the `95%` confidence interval.
+
+Our next step will be to compare two groups like men and women while varying another continuous variable from lowest to highest. We use income here. So, we set a sequence for income, vary gender and keep every other variable constant at its appropriate measure of central tendency. 
+
+Let's see what the range of `Income` variable is:
+
+```{r}
+range(bes$Income)
+```
+
+`Income` ranges from ``r min(bes$Income)`` to ``r max(bes$Income)`` in our sample so we can just say ``r sprintf("Income = %d:%d", min(bes$Income), max(bes$Income))`` or use the `seq()` function as shown below:
+
+```{r echo = FALSE}
+set.seed(666)
+```
+
+```{r}
+x.male <- setx(z.out, 
+               Gender = "Male", edu18 = 1, 
+               Age = mean(bes$Age),
+               Income = seq(1, 13), 
+               polinfoindex = mean(bes$polinfoindex), 
+               Influence = mean(bes$Influence),  
+               edu15 = 0, edu17 = 0, edu19plus = 0, in_school = 0, in_uni = 0)
+
+x.female <- setx(z.out, Gender = "Female", edu18 = 1, 
+                 Age = mean(bes$Age),
+                 Income = seq(1, 13), 
+                 polinfoindex = mean(bes$polinfoindex), 
+                 Influence = mean(bes$Influence),  
+                 edu15 = 0, edu17 = 0, edu19plus = 0, in_school = 0, in_uni = 0)
+
+s.out <- sim(z.out, x.male, x1 = x.female)
+```
+
+Now we can plot the confidence interval for the two groups:
+
+```{r}
+ci.plot(s.out, 
+        ci = 95,
+        xlab = "Income", 
+        ylab = "Predicted Probability of Voting",
+        main = "Effect of Income by Gender")
+
+# add labels manually
+# NOTE: the x and y values below are just coordinates on the plot, you can change 
+#       them based on where you want the labels placed
+text(x = 3, y = .85, labels = "Women")  
+text(x = 6, y = .75, labels = "Men")    
+```
+
