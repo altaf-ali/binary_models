@@ -4,6 +4,7 @@ Let's start by loading the required packages:
 
 ```{r message = FALSE}
 library(foreign) 
+library(Zelig) 
 library(texreg) 
 library(lmtest)
 library(dplyr)
